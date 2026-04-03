@@ -7,7 +7,7 @@ require('dotenv').config({ quiet: true });
 
 const errorHandler = require('./middleware/errorHandler');
 const indexRouter = require('./routes/indexRouter');
-// const productsRouter = require('./routes/productsRouter')
+const productsRouter = require('./routes/productsRouter');
 // const categoriesRouter = require('./routes/categoriesRouter');
 // const brandsRouter = require('./routes/brandsRouter');
 // const vendorsRouter = require('./routes/vendorsRouter');
@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 app.use('/', indexRouter);
-// app.use('/products',productsRouter)
+app.use('/products', productsRouter);
 // app.use('/categories', categoriesRouter);
 // app.use('/brands', brandsRouter);
 // app.use('/vendors', vendorsRouter);

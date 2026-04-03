@@ -4,8 +4,8 @@
   <body>
 
     <main>
-      <form action="/" method="get">
-        <input type="search" name="search" id="search">
+      <form action="/products" method="get">
+        <input type="search" name="search" id="search" placeholder="Search for a product" value="<%= searchParam || '' %>">
       </form>
       <% if(productsList && productsList.length!==0 ){ %>
         <h1>All products</h1>
@@ -20,14 +20,6 @@
       <% })} %>  
     </main>
 
-    <aside>
-      <a href="/">Home</a>
-      <a href="/categories">Categories</a>
-      <a href="/brands">Brands</a>
-      <a href="/vendors">Vendors</a>
-      <a href="/stock">Stock Movements</a>
-
-    </aside>
-  
+ <%- include('./partials/nav') %>
   </body>
 </html>

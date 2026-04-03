@@ -43,6 +43,16 @@ async function deleteVendor(id) {
 
   return result.rows[0];
 }
+
+async function addProductToVendor(vendor_id, { product_id, unit_cost }) {
+  const result = await pool.query(
+    `INSERT INTO vendor_products (product_id, vendor_id, unit_cost)
+         VALUES ($1, $2, $3)`,
+    [product_id, vendor_id, unit_cost],
+  );
+
+  return result.rows[0];
+}
 module.exports = {
   getAllVendors,
   addVendor,
