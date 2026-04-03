@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+  <body>
+<form id="update-brand-form" data-id="<%= brand.id  %>">
+  <input type="text" name="name" value="<%= brand.name||'' %>">
+  <button type="submit">Add</button>
+</form>
+ <%- include('../partials/nav') %>
+  </body>
+  <script src="/js/brands.js"></script>
+</html>
+

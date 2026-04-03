@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+</head>
+<body>
+  <% if(brandsList && brandsList.length!==0){ %>
+  <h1>All Brands</h1>
+  <a href="/brands/create">Add Brand</a>
+  <p><%= brandsList.length %></p>
+  <div id="brands-container">
+    <% brandsList.forEach(brand => { %>
+      <div>
+      <p><%= brand.name %></p>
+        <div>
+        <a href="/brands/<%= brand.id %>/update">Update</a>
+        <button class="del-brand-btn" data-id="<%= brand.id %>">Delete</button>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+  <% } %>
+  <%- include('../partials/nav') %>
+<script src="/js/brands.js"></script>
+</body>
+</html>

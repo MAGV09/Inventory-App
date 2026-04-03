@@ -1,4 +1,5 @@
 const pool = require('../db/pool');
+const createError = require('http-errors');
 
 async function getAllBrands() {
   const result = await pool.query(
@@ -7,6 +8,15 @@ async function getAllBrands() {
   );
 
   return result.rows;
+}
+async function getBrand(id) {
+  const result = await pool.query(
+    `SELECT * FROM brands
+         WHERE id=$1`,
+    [id],
+  );
+
+  return result.rows[0];
 }
 
 async function addBrand({ name }) {
@@ -32,8 +42,32 @@ async function updateBrand(id, { name }) {
   return result.rows[0];
 }
 
+async function deleteBrand(id) {
+  const brand = await getBrand(id);
+
+  if (!brand) {
+    throw createError(404, 'Brand not found');
+  }
+
+  let generic = await pool.query(`SELECT id FROM brands WHERE name = 'Generic'`);
+
+  if (generic.rows.length === 0) {
+    generic = await pool.query(`INSERT INTO brands (name) VALUES ('Generic') RETURNING id`);
+  }
+
+  const genericId = generic.rows[0].id;
+
+  await pool.query(`UPDATE products SET brand_id = $1 WHERE brand_id = $2`, [genericId, id]);
+
+  const { rows } = await pool.query(`DELETE FROM brands WHERE id = $1 RETURNING *`, [id]);
+
+  return rows[0];
+}
+
 module.exports = {
   getAllBrands,
+  getBrand,
   addBrand,
   updateBrand,
+  deleteBrand,
 };

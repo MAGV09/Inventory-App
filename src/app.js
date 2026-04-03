@@ -9,7 +9,7 @@ const errorHandler = require('./middleware/errorHandler');
 const indexRouter = require('./routes/indexRouter');
 const productsRouter = require('./routes/productsRouter');
 // const categoriesRouter = require('./routes/categoriesRouter');
-// const brandsRouter = require('./routes/brandsRouter');
+const brandsRouter = require('./routes/brandsRouter');
 // const vendorsRouter = require('./routes/vendorsRouter');
 // const stock_movementsRouter = require('./routes/stock_movementsRouter');
 
@@ -25,7 +25,7 @@ app.use(morgan('dev'));
 app.use('/', indexRouter);
 app.use('/products', productsRouter);
 // app.use('/categories', categoriesRouter);
-// app.use('/brands', brandsRouter);
+app.use('/brands', brandsRouter);
 // app.use('/vendors', vendorsRouter);
 // app.use('/stock', stock_movementsRouter);
 
