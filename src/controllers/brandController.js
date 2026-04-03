@@ -10,7 +10,7 @@ async function getBrandsForm(req, res) {
 }
 
 async function createBrand(req, res) {
-  brands.addBrand(req.body);
+  await brands.addBrand(req.body);
   res.redirect('/brands');
 }
 

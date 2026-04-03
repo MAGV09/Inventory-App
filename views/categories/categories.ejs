@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+</head>
+<body>
+  <% if(categoriesList && categoriesList.length!==0){ %>
+  <h1>All Categories</h1>
+  <a href="/categories/create">Add Category</a>
+  <p><%= categoriesList.length %></p>
+  <div id="categories-container">
+    <% categoriesList.forEach(category => { %>
+      <div>
+        <p><%= category.name %></p>
+        <div>
+          <a href="/categories/<%= category.id %>/update">Update</a>
+          <button class="del-category-btn" data-id="<%= category.id %>">Delete</button>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+  <% } %>
+  <%- include('../partials/nav') %>
+  <script src="/js/categories.js"></script>
+</body>
+</html>

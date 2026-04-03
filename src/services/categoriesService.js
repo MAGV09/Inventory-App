@@ -1,5 +1,5 @@
 const pool = require('../db/pool');
-
+const createError = require('http-errors');
 async function getAllCategories() {
   const result = await pool.query(
     `SELECT * FROM categories
@@ -7,6 +7,15 @@ async function getAllCategories() {
   );
 
   return result.rows;
+}
+
+async function getCategory(id) {
+  const result = await pool.query(
+    `SELECT * FROM categories
+     WHERE id=$1`,
+    [id],
+  );
+  return result.rows[0];
 }
 
 async function addCategory({ name }) {
@@ -32,8 +41,37 @@ async function updateCategory(id, { name }) {
   return result.rows[0];
 }
 
+async function deleteCategory(id) {
+  const category = await getCategory(id);
+
+  if (!category) {
+    throw createError(404, 'Category not found');
+  }
+
+  let uncategorized = await pool.query(`SELECT id FROM categories WHERE name = 'Uncategorized'`);
+
+  if (uncategorized.rows.length === 0) {
+    uncategorized = await pool.query(
+      `INSERT INTO categories (name) VALUES ('Uncategorized') RETURNING id`,
+    );
+  }
+
+  const uncategorizedId = uncategorized.rows[0].id;
+
+  await pool.query(`UPDATE products SET category_id = $1 WHERE category_id = $2`, [
+    uncategorizedId,
+    id,
+  ]);
+
+  const result = await pool.query(`DELETE FROM categories WHERE id = $1 RETURNING *`, [id]);
+
+  return result.rows[0];
+}
+
 module.exports = {
   getAllCategories,
+  getCategory,
   addCategory,
   updateCategory,
+  deleteCategory,
 };

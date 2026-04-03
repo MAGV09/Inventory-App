@@ -59,9 +59,9 @@ async function deleteBrand(id) {
 
   await pool.query(`UPDATE products SET brand_id = $1 WHERE brand_id = $2`, [genericId, id]);
 
-  const { rows } = await pool.query(`DELETE FROM brands WHERE id = $1 RETURNING *`, [id]);
+  const result = await pool.query(`DELETE FROM brands WHERE id = $1 RETURNING *`, [id]);
 
-  return rows[0];
+  return result.rows[0];
 }
 
 module.exports = {
