@@ -16,16 +16,65 @@ async function getAllProducts() {
 `);
   return rows;
 }
+async function getProduct({ name, brand, category }) {
+  const { rows } = await pool.query(
+    `
+    SELECT 
+        products.name,
+        categories.name  AS category,
+        brands.name      AS brand,
+        products.stock_qty,
+        MIN(vendor_products.unit_cost) AS starting_price
+    FROM products
+    JOIN categories     ON products.category_id = categories.id
+    JOIN brands         ON products.brand_id = brands.id
+    JOIN vendor_products ON products.id = vendor_products.product_id
+    WHERE products.name=$1  OR brands.name=$2 OR categories.name=$3
+    GROUP BY products.name, categories.name, brands.name, products.stock_qty
+`,
+    [name, brand, category],
+  );
+  return rows;
+}
 
-async function addProduct(name, category_id, brand_id) {
+async function getProductDetails(id) {
+  const { rows } = await pool.query(
+    `
+    SELECT 
+        products.name,
+        categories.name  AS category,
+        brands.name      AS brand,
+        products.stock_qty,
+        MIN(vendor_products.unit_cost) AS starting_price
+    FROM products
+    JOIN categories     ON products.category_id = categories.id
+    JOIN brands         ON products.brand_id = brands.id
+    JOIN vendor_products ON products.id = vendor_products.product_id
+    WHERE products.id=$1
+    GROUP BY products.name, categories.name, brands.name, products.stock_qty
+`,
+    [id],
+  );
+  return rows;
+}
+
+async function addProduct({ name, category_id, brand_id, vendor_id, unit_cost }) {
   const result = await pool.query(
     `INSERT INTO products (name, category_id, brand_id, stock_qty)
-     VALUES ($1, $2, $3, 0)
-     RETURNING id`,
+         VALUES ($1, $2, $3, 0)
+         RETURNING *`,
     [name, category_id, brand_id],
   );
-  const productId = result.rows[0].id;
-  return productId; //needed for the vendor_product table.
+
+  const product = result.rows[0];
+
+  await pool.query(
+    `INSERT INTO vendor_products (product_id, vendor_id, unit_cost)
+         VALUES ($1, $2, $3)`,
+    [product.id, vendor_id, unit_cost],
+  );
+
+  return product;
 }
 
 async function updateProduct(id, { name, category_id, brand_id, vendor_id, unit_cost }) {
@@ -64,6 +113,8 @@ async function deleteProduct(id) {
 
 module.exports = {
   getAllProducts,
+  getProduct,
+  getProductDetails,
   addProduct,
   updateProduct,
   deleteProduct,

@@ -2,5 +2,32 @@
 <html lang="en">
   <%- include('./partials/head') %>
   <body>
+
+    <main>
+      <form action="/" method="get">
+        <input type="search" name="search" id="search">
+      </form>
+      <% if(productsList && productsList.length!==0 ){ %>
+        <h1>All products</h1>
+      <%  productsList.forEach(product=>{ %>
+        <div data-id="<%= product.id %>">
+          <p><%= product.name %></p>
+          <p><%= product.category %></p>
+          <p><%= product.brand %></p>
+          <p><%= product.stock_qty %></p>
+          <p>$<%= product.starting_price %></p>
+        </div>
+      <% })} %>  
+    </main>
+
+    <aside>
+      <a href="/">Home</a>
+      <a href="/categories">Categories</a>
+      <a href="/brands">Brands</a>
+      <a href="/vendors">Vendors</a>
+      <a href="/stock">Stock Movements</a>
+
+    </aside>
+  
   </body>
 </html>
