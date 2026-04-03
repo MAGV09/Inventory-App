@@ -21,6 +21,14 @@ export default defineConfig([
     },
   },
   {
+    files: ['public/**/*.js'],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      globals: globals.browser,
+    },
+  },
+  {
     files: ['**/*.test.js', '**/*.spec.js'],
     languageOptions: {
       globals: {

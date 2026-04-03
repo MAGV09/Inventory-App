@@ -11,7 +11,11 @@ async function getProductsPage(req, res) {
     productsList = await products.getAllProducts();
   }
 
-  res.render('products', { title: 'Products Page', productsList, searchParam });
+  res.render('products/products', { title: 'Products Page', productsList, searchParam });
 }
 
-module.exports = { getProductsPage };
+async function deleteProduct(req, res) {
+  const deletedProduct = await products.deleteProduct(req.params.id);
+  res.json({ redirect: '/products' });
+}
+module.exports = { getProductsPage, deleteProduct };
