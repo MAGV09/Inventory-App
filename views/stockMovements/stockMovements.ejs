@@ -1,24 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../partials/head') %>
-</head>
 <body>
-  <h1>Stock Movements</h1>
-  <a href="/stock-movements/create">Add Stock Movement</a>
-  <% if(stockMovementsList && stockMovementsList.length !== 0){ %>
-  <div id="stock-movements-container">
-    <% stockMovementsList.forEach(movement => { %>
-      <div>
-        <p><%= movement.product %></p>
-        <p><%= movement.type %></p>
-        <p><%= movement.quantity %></p>
-        <p><%= movement.vendor || 'N/A' %></p>
-        <p><%= movement.note || '' %></p>
-        <p><%= new Date(movement.created_at).toLocaleDateString() %></p>
+  <main>
+    <div class="page-header">
+      <div class="page-header-left">
+        <span class="page-label">Audit Trail</span>
+        <h1>Stock Movements</h1>
       </div>
-    <% }); %>
-  </div>
-  <% } %>
+      <a href="/stock-movements/create" class="btn btn-primary">+ Add Movement</a>
+    </div>
+    <% if(stockMovementsList && stockMovementsList.length){ %>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product</th>
+              <th>Type</th>
+              <th>Qty</th>
+              <th>Vendor</th>
+              <th>Note</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% stockMovementsList.forEach(movement => { %>
+              <tr>
+                <td class="mono" style="color:var(--muted);">#<%= movement.id %></td>
+                <td><%= movement.product %></td>
+                <td><span class="badge badge-<%= movement.type %>"><%= movement.type %></span></td>
+                <td class="mono"><%= movement.quantity %></td>
+                <td style="color:var(--muted)"><%= movement.vendor || '—' %></td>
+                <td style="color:var(--muted);font-size:0.85rem;"><%= movement.note || '—' %></td>
+                <td class="mono" style="color:var(--muted);white-space:nowrap;">
+                  <%= new Date(movement.created_at).toLocaleDateString() %>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="empty">No stock movements recorded yet</div>
+    <% } %>
+  </main>
   <%- include('../partials/nav') %>
 </body>
 </html>

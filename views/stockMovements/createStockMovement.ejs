@@ -1,36 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head') %>
-  <body>
-    <form method="POST" action="/stock-movements/create">
-
-      <select name="product_id" required>
-        <option value="">Select Product</option>
-        <% productsList.forEach(product => { %>
-          <option value="<%= product.id %>"><%= product.name %></option>
-        <% }); %>
-      </select>
-
-      <select name="vendor_id">
-        <option value="">Select Vendor (optional)</option>
-        <% vendorsList.forEach(vendor => { %>
-          <option value="<%= vendor.id %>"><%= vendor.name %></option>
-        <% }); %>
-      </select>
-
-<select name="type" required>
-  <option value="">Select Type</option>
-  <option value="restock">Restock</option>
-  <option value="removal">Removal</option>
-  <option value="adjustment">Adjustment</option>
-  <option value="damage">Damage</option>
-</select>
-
-      <input type="number" name="quantity" min="1" required placeholder="Quantity">
-      <input type="text" name="note" placeholder="Note (optional)">
-
-      <button type="submit">Add</button>
-    </form>
-    <%- include('../partials/nav') %>
-  </body>
+<%- include('../partials/head') %>
+<body>
+  <main>
+    <a href="/stock-movements" class="back-link">Stock Movements</a>
+    <div style="margin-bottom:32px;">
+      <span class="page-label">New Entry</span>
+      <h1>Add Movement</h1>
+    </div>
+    <div class="form-card">
+      <form method="POST" action="/stock-movements/create">
+        <div class="form-group">
+          <label class="form-label">Product</label>
+          <select name="product_id" required>
+            <option value="">Select Product</option>
+            <% productsList.forEach(product => { %>
+              <option value="<%= product.id %>"><%= product.name %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Vendor (optional)</label>
+          <select name="vendor_id">
+            <option value="">None</option>
+            <% vendorsList.forEach(vendor => { %>
+              <option value="<%= vendor.id %>"><%= vendor.name %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Movement Type</label>
+          <select name="type" required>
+            <option value="">Select Type</option>
+            <option value="restock">Restock</option>
+            <option value="removal">Removal</option>
+            <option value="adjustment">Adjustment</option>
+            <option value="damage">Damage</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity</label>
+          <input type="number" name="quantity" min="1" placeholder="0" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Note (optional)</label>
+          <input type="text" name="note" placeholder="e.g. Damaged during delivery">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Record Movement</button>
+      </form>
+    </div>
+  </main>
+  <%- include('../partials/nav') %>
+</body>
 </html>

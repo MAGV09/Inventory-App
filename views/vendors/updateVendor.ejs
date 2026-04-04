@@ -1,13 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head') %>
-  <body>
-    <form id="update-vendor-form" data-id="<%= vendor.id %>">
-      <input type="text" name="name" value="<%= vendor.name || '' %>">
-      <input type="text" name="location" value="<%= vendor.location || '' %>">
-      <button type="submit">Update</button>
-    </form>
-    <%- include('../partials/nav') %>
-    <script src="/js/vendors.js"></script>
-  </body>
+<%- include('../partials/head') %>
+<body>
+  <main>
+    <a href="/vendors" class="back-link">Vendors</a>
+    <div style="margin-bottom:32px;">
+      <span class="page-label">Edit Vendor</span>
+      <h1><%= vendor.name %></h1>
+    </div>
+    <div class="form-card">
+      <form id="update-vendor-form" data-id="<%= vendor.id %>">
+        <div class="form-group">
+          <label class="form-label">Vendor Name</label>
+          <input type="text" name="name" value="<%= vendor.name || '' %>" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Location</label>
+          <input type="text" name="location" value="<%= vendor.location || '' %>">
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Changes</button>
+      </form>
+    </div>
+  </main>
+  <%- include('../partials/nav') %>
+  <script src="/js/vendors.js"></script>
+</body>
 </html>

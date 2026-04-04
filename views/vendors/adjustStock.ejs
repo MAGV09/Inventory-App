@@ -2,28 +2,52 @@
 <html lang="en">
 <%- include('../partials/head') %>
 <body>
-  <h1>Adjust Stock for <%= vendor.name %></h1>
-  <% if(products && products.length !== 0){ %>
-  <form method="post" action="/vendors/<%= vendor.id %>/adjust-stock">
-    <select name="product_id">
-      <% products.forEach(product => { %>
-        <option value="<%= product.id %>"><%= product.name %> (cost: $<%= product.unit_cost %>)</option>
-      <% }); %>
-    </select>
-    <select name="type">
-      <option value="restock">Restock</option>
-      <option value="removal">Removal</option>
-      <option value="adjustment">Adjustment</option>
-      <option value="damage">Damage</option>
-    </select>
-    <input type="number" name="quantity" placeholder="Quantity" min="1">
-    <input type="text" name="note" placeholder="Note (optional)">
-    <button type="submit">Submit</button>
-  </form>
-  <% } else { %>
-    <p>This vendor has no products yet. Add products first.</p>
-  <% } %>
-  <a href="/vendors">Back to Vendors</a>
+  <main>
+    <a href="/vendors" class="back-link">Vendors</a>
+    <div style="margin-bottom:32px;">
+      <span class="page-label"><%= vendor.name %></span>
+      <h1>Adjust Stock</h1>
+    </div>
+    <% if(products && products.length){ %>
+      <div class="form-card">
+        <form method="post" action="/vendors/<%= vendor.id %>/adjust-stock">
+          <div class="form-group">
+            <label class="form-label">Product</label>
+            <select name="product_id" required>
+              <% products.forEach(product => { %>
+                <option value="<%= product.id %>">
+                  <%= product.name %> — $<%= parseFloat(product.unit_cost).toFixed(2) %>
+                </option>
+              <% }); %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Movement Type</label>
+            <select name="type" required>
+              <option value="restock">Restock</option>
+              <option value="removal">Removal</option>
+              <option value="adjustment">Adjustment</option>
+              <option value="damage">Damage</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Quantity</label>
+            <input type="number" name="quantity" placeholder="0" min="1" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Note (optional)</label>
+            <input type="text" name="note" placeholder="e.g. Monthly restock from warehouse">
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;">Submit Movement</button>
+        </form>
+      </div>
+    <% } else { %>
+      <div class="empty">
+        This vendor has no products yet —
+        <a href="/vendors/<%= vendor.id %>/add-product" style="color:var(--accent);">add products first</a>
+      </div>
+    <% } %>
+  </main>
   <%- include('../partials/nav') %>
 </body>
 </html>

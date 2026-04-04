@@ -1,26 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../partials/head') %>
-</head>
 <body>
-  <% if(categoriesList && categoriesList.length!==0){ %>
-  <h1>All Categories</h1>
-  <a href="/categories/create">Add Category</a>
-  <p><%= categoriesList.length %></p>
-  <div id="categories-container">
-    <% categoriesList.forEach(category => { %>
-      <div>
-        <p><%= category.name %></p>
-        <% if(category.name.toLowerCase() !=='uncategorized') {%>
-        <div>
-          <a href="/categories/<%= category.id %>/update">Update</a>
-          <button class="del-category-btn" data-id="<%= category.id %>">Delete</button>
-        </div>
-        <% } %>
+  <main>
+    <div class="page-header">
+      <div class="page-header-left">
+        <span class="page-label">Reference Data</span>
+        <h1>Categories</h1>
       </div>
-    <% }); %>
-  </div>
-  <% } %>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <% if(categoriesList && categoriesList.length){ %>
+          <span class="count-badge"><%= categoriesList.length %> categories</span>
+        <% } %>
+        <a href="/categories/create" class="btn btn-primary">+ Add Category</a>
+      </div>
+    </div>
+    <% if(categoriesList && categoriesList.length){ %>
+      <div class="table-wrap" id="categories-container">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <% categoriesList.forEach(category => { %>
+              <tr>
+                <td><%= category.name %></td>
+                <td>
+                  <% if(category.name.toLowerCase() !== 'uncategorized'){ %>
+                    <div style="display:flex;gap:8px;">
+                      <a href="/categories/<%= category.id %>/update" class="btn btn-ghost btn-sm">Edit</a>
+                      <button class="btn btn-danger btn-sm del-category-btn" data-id="<%= category.id %>">Delete</button>
+                    </div>
+                  <% } else { %>
+                    <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:2px;">SYSTEM</span>
+                  <% } %>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="empty">No categories yet</div>
+    <% } %>
+  </main>
   <%- include('../partials/nav') %>
   <script src="/js/categories.js"></script>
 </body>

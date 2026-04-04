@@ -1,37 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head') %>
-  <body>
-
-    <main>
-      <form action="/products" method="get">
-        <input type="search" name="search" id="search" placeholder="Search for a product" value="<%= searchParam || '' %>">
-      </form>
-      <a href="/products/create">Add Product</a>
-      <% if(productsList && productsList.length!==0 ){ %>
-        <h1>All products</h1>
-        <p><%= productsList.length %></p>
-        <div id="products-container">
-        <%  productsList.forEach(product=>{ %>
-        <div>
-          <p><%= product.name %></p>
-          <p><%= product.category %></p>
-          <p><%= product.brand %></p>
-          <p><%= product.stock_qty %></p>
-          <p>$<%= product.starting_price %></p>
-          <div>
-            <a href="/products/details/<%= product.id %>">View Details</a>
-            <a href="/products/update/<%= product.id %>">Update</a>
-            <button class="del-product-btn" data-id="<%= product.id %>" type="button">Delete</button>
-          </div>
-        </div>
-      <% }) %>  
-        </div>
+<%- include('../partials/head') %>
+<body>
+  <main>
+    <div class="page-header">
+      <div class="page-header-left">
+        <span class="page-label">Inventory</span>
+        <h1>Products</h1>
+      </div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <% if(productsList && productsList.length){ %>
+          <span class="count-badge"><%= productsList.length %> items</span>
         <% } %>
-    
-    </main>
+        <a href="/products/create" class="btn btn-primary">+ Add Product</a>
+      </div>
+    </div>
 
- <%- include('../partials/nav') %>
- <script src="/js/products.js"></script>
-  </body>
+    <div class="search-bar">
+      <form action="/products" method="get" style="display:flex;gap:8px;width:100%;">
+        <input type="search" name="search" placeholder="Search by name, brand or category…" value="<%= searchParam || '' %>">
+        <button type="submit" class="btn btn-ghost">Search</button>
+        <% if(searchParam){ %>
+          <a href="/products" class="btn btn-ghost">Clear</a>
+        <% } %>
+      </form>
+    </div>
+
+    <% if(productsList && productsList.length){ %>
+      <div class="cards-grid" id="products-container">
+        <% productsList.forEach(product => { %>
+          <div class="card">
+            <div class="card-name"><%= product.name %></div>
+            <div class="card-meta">
+              <span class="tag"><%= product.category %></span>
+              <span class="tag tag-accent"><%= product.brand %></span>
+            </div>
+            <div class="card-stat">
+              <span class="stat-label">Stock</span>
+              <span class="stat-value <%= product.stock_qty < 10 ? 'stock-low' : 'stock-ok' %>">
+                <%= product.stock_qty %> units
+              </span>
+            </div>
+            <div class="card-stat">
+              <span class="stat-label">From</span>
+              <span class="stat-value price">$<%= parseFloat(product.starting_price).toFixed(2) %></span>
+            </div>
+            <div class="card-actions">
+              <a href="/products/details/<%= product.id %>" class="btn btn-ghost btn-sm">View</a>
+              <a href="/products/update/<%= product.id %>" class="btn btn-ghost btn-sm">Edit</a>
+              <button class="btn btn-danger btn-sm del-product-btn" data-id="<%= product.id %>">Delete</button>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="empty">
+        <% if(searchParam){ %>
+          No products match "<%= searchParam %>"
+        <% } else { %>
+          No products yet — add one to get started
+        <% } %>
+      </div>
+    <% } %>
+  </main>
+  <%- include('../partials/nav') %>
+  <script src="/js/products.js"></script>
+</body>
 </html>

@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head') %>
-  <body>
-    <form id="update-category-form" data-id="<%= category.id %>">
-      <input type="text" name="name" value="<%= category.name || '' %>">
-      <button type="submit">Update</button>
-    </form>
-    <%- include('../partials/nav') %>
-    <script src="/js/categories.js"></script>
-  </body>
+<%- include('../partials/head') %>
+<body>
+  <main>
+    <a href="/categories" class="back-link">Categories</a>
+    <div style="margin-bottom:32px;">
+      <span class="page-label">Edit Category</span>
+      <h1><%= category.name %></h1>
+    </div>
+    <div class="form-card">
+      <form id="update-category-form" data-id="<%= category.id %>">
+        <div class="form-group">
+          <label class="form-label">Category Name</label>
+          <input type="text" name="name" value="<%= category.name || '' %>" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Changes</button>
+      </form>
+    </div>
+  </main>
+  <%- include('../partials/nav') %>
+  <script src="/js/categories.js"></script>
+</body>
 </html>

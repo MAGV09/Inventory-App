@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head') %>
-  <body>
-<form id="update-brand-form" data-id="<%= brand.id  %>">
-  <input type="text" name="name" value="<%= brand.name||'' %>">
-  <button type="submit">Add</button>
-</form>
- <%- include('../partials/nav') %>
-  </body>
+<%- include('../partials/head') %>
+<body>
+  <main>
+    <a href="/brands" class="back-link">Brands</a>
+    <div style="margin-bottom:32px;">
+      <span class="page-label">Edit Brand</span>
+      <h1><%= brand.name %></h1>
+    </div>
+    <div class="form-card">
+      <form id="update-brand-form" data-id="<%= brand.id %>">
+        <div class="form-group">
+          <label class="form-label">Brand Name</label>
+          <input type="text" name="name" value="<%= brand.name || '' %>" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Changes</button>
+      </form>
+    </div>
+  </main>
+  <%- include('../partials/nav') %>
   <script src="/js/brands.js"></script>
+</body>
 </html>
-

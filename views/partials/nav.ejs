@@ -1,8 +1,7 @@
-   <nav>
-      <a href="/products">Products</a>
-      <a href="/categories">Categories</a>
-      <a href="/brands">Brands</a>
-      <a href="/vendors">Vendors</a>
-      <a href="/stock-movements">Stock Movements</a>
-    </nav>
-  
+<nav>
+  <a href="/products"        class="<%= locals.title && title.toLowerCase().includes('product')  ? 'active' : '' %>">Products</a>
+  <a href="/vendors"         class="<%= locals.title && title.toLowerCase().includes('vendor')   ? 'active' : '' %>">Vendors</a>
+  <a href="/stock-movements" class="<%= locals.title && title.toLowerCase().includes('stock')    ? 'active' : '' %>">Movements</a>
+  <a href="/brands"          class="<%= locals.title && title.toLowerCase().includes('brand')    ? 'active' : '' %>">Brands</a>
+  <a href="/categories"      class="<%= locals.title && title.toLowerCase().includes('categor')  ? 'active' : '' %>">Categories</a>
+</nav>

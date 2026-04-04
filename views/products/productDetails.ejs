@@ -2,29 +2,62 @@
 <html lang="en">
 <%- include('../partials/head') %>
 <body>
-  <h1><%= product.name %></h1>
-  <p>Category: <%= product.category %></p>
-  <p>Brand: <%= product.brand %></p>
-  <p>Stock: <%= product.stock_qty %></p>
-  <p>Starting Price: $<%= product.starting_price %></p>
-
-  <h2>Vendors</h2>
-  <% if(productVendors && productVendors.length !== 0){ %>
-    <% productVendors.forEach(vendor => { %>
-      <div>
-        <p><%= vendor.name %></p>
-        <p><%= vendor.location %></p>
-        <p>$<%= vendor.unit_cost %></p>
+  <main>
+    <a href="/products" class="back-link">Products</a>
+    <div class="detail-header">
+      <span class="page-label">Product Details</span>
+      <h1><%= product.name %></h1>
+      <div class="card-meta" style="margin-top:10px;">
+        <span class="tag"><%= product.category %></span>
+        <span class="tag tag-accent"><%= product.brand %></span>
       </div>
-    <% }); %>
-  <% } else { %>
-    <p>No vendors linked to this product.</p>
-  <% } %>
+    </div>
 
-  <div>
-    <a href="/products/update/<%= product.id %>">Update</a>
-    <a href="/products">Back to Products</a>
-  </div>
+    <div class="detail-stats">
+      <div class="stat-block">
+        <span class="stat-label">Stock Quantity</span>
+        <span class="stat-value <%= product.stock_qty < 10 ? 'stock-low' : 'stock-ok' %>">
+          <%= product.stock_qty %> units
+        </span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-label">Starting Price</span>
+        <span class="stat-value price">$<%= parseFloat(product.starting_price).toFixed(2) %></span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <h2>Vendors</h2>
+    <% if(productVendors && productVendors.length){ %>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Vendor</th>
+              <th>Location</th>
+              <th>Unit Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% productVendors.forEach(vendor => { %>
+              <tr>
+                <td><%= vendor.name %></td>
+                <td class="mono"><%= vendor.location || '—' %></td>
+                <td class="price">$<%= parseFloat(vendor.unit_cost).toFixed(2) %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="empty">No vendors linked to this product</div>
+    <% } %>
+
+    <div style="display:flex;gap:12px;margin-top:32px;">
+      <a href="/products/update/<%= product.id %>" class="btn btn-ghost">Edit Product</a>
+    </div>
+  </main>
   <%- include('../partials/nav') %>
 </body>
 </html>

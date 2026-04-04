@@ -2,36 +2,53 @@
 <html lang="en">
 <%- include('../partials/head') %>
 <body>
-  <h1>Add Product</h1>
-  <form method="post" action="/products/create">
-    <input type="text" name="name" placeholder="Product name" required>
-
-    <select name="category_id" required>
-      <option value="">Select Category</option>
-      <% categoriesList.forEach(cat => { %>
-        <option value="<%= cat.id %>"><%= cat.name %></option>
-      <% }); %>
-    </select>
-
-    <select name="brand_id" required>
-      <option value="">Select Brand</option>
-      <% brandsList.forEach(brand => { %>
-        <option value="<%= brand.id %>"><%= brand.name %></option>
-      <% }); %>
-    </select>
-
-    <select name="vendor_id" required>
-      <option value="">Select Vendor</option>
-      <% vendorsList.forEach(vendor => { %>
-        <option value="<%= vendor.id %>"><%= vendor.name %></option>
-      <% }); %>
-    </select>
-
-    <input type="number" name="unit_cost" placeholder="Unit Cost" step="0.01" min="0" required>
-
-    <button type="submit">Add Product</button>
-  </form>
-  <a href="/products">Back to Products</a>
+  <main>
+    <a href="/products" class="back-link">Products</a>
+    <div style="margin-bottom:32px;">
+      <span class="page-label">New Entry</span>
+      <h1>Add Product</h1>
+    </div>
+    <div class="form-card">
+      <form method="post" action="/products/create">
+        <div class="form-group">
+          <label class="form-label">Product Name</label>
+          <input type="text" name="name" placeholder="e.g. RTX 4090" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select name="category_id" required>
+            <option value="">Select Category</option>
+            <% categoriesList.forEach(cat => { %>
+              <option value="<%= cat.id %>"><%= cat.name %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Brand</label>
+          <select name="brand_id" required>
+            <option value="">Select Brand</option>
+            <% brandsList.forEach(brand => { %>
+              <option value="<%= brand.id %>"><%= brand.name %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Vendor</label>
+          <select name="vendor_id" required>
+            <option value="">Select Vendor</option>
+            <% vendorsList.forEach(vendor => { %>
+              <option value="<%= vendor.id %>"><%= vendor.name %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Unit Cost ($)</label>
+          <input type="number" name="unit_cost" placeholder="0.00" step="0.01" min="0" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Add Product</button>
+      </form>
+    </div>
+  </main>
   <%- include('../partials/nav') %>
 </body>
 </html>

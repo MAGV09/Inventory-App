@@ -1,27 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../partials/head') %>
-</head>
 <body>
-  <% if(brandsList && brandsList.length!==0){ %>
-  <h1>All Brands</h1>
-  <a href="/brands/create">Add Brand</a>
-  <p><%= brandsList.length %></p>
-  <div id="brands-container">
-    <% brandsList.forEach(brand => { %>
-      <div>
-      <p><%= brand.name %></p>
-      <% if(brand.name.toLowerCase() !== 'generic'){ %>
-        <div>
-        <a href="/brands/<%= brand.id %>/update">Update</a>
-        <button class="del-brand-btn" data-id="<%= brand.id %>">Delete</button>
-        </div>
-        <% } %>
+  <main>
+    <div class="page-header">
+      <div class="page-header-left">
+        <span class="page-label">Reference Data</span>
+        <h1>Brands</h1>
       </div>
-    <% }); %>
-  </div>
-  <% } %>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <% if(brandsList && brandsList.length){ %>
+          <span class="count-badge"><%= brandsList.length %> brands</span>
+        <% } %>
+        <a href="/brands/create" class="btn btn-primary">+ Add Brand</a>
+      </div>
+    </div>
+    <% if(brandsList && brandsList.length){ %>
+      <div class="table-wrap" id="brands-container">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <% brandsList.forEach(brand => { %>
+              <tr>
+                <td><%= brand.name %></td>
+                <td>
+                  <% if(brand.name.toLowerCase() !== 'generic'){ %>
+                    <div style="display:flex;gap:8px;">
+                      <a href="/brands/<%= brand.id %>/update" class="btn btn-ghost btn-sm">Edit</a>
+                      <button class="btn btn-danger btn-sm del-brand-btn" data-id="<%= brand.id %>">Delete</button>
+                    </div>
+                  <% } else { %>
+                    <span style="font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:2px;">SYSTEM</span>
+                  <% } %>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } else { %>
+      <div class="empty">No brands yet</div>
+    <% } %>
+  </main>
   <%- include('../partials/nav') %>
-<script src="/js/brands.js"></script>
+  <script src="/js/brands.js"></script>
 </body>
 </html>

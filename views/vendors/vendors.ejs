@@ -2,25 +2,41 @@
 <html lang="en">
 <%- include('../partials/head') %>
 <body>
-  <% if(vendorsList && vendorsList.length !== 0){ %>
-  <h1>All Vendors</h1>
-  <a href="/vendors/create">Add Vendor</a>
-  <p><%= vendorsList.length %></p>
-  <div id="vendors-container">
-    <% vendorsList.forEach(vendor => { %>
-      <div>
-        <p><%= vendor.name %></p>
-        <p><%= vendor.location %></p>
-        <div>
-          <a href="/vendors/<%= vendor.id %>/update">Update</a>
-          <a href="/vendors/<%= vendor.id %>/add-product">Add Product</a>
-          <a href="/vendors/<%= vendor.id %>/adjust-stock">Adjust Stock</a>
-          <button class="del-vendor-btn" data-id="<%= vendor.id %>">Delete</button>
-        </div>
+  <main>
+    <div class="page-header">
+      <div class="page-header-left">
+        <span class="page-label">Supply Chain</span>
+        <h1>Vendors</h1>
       </div>
-    <% }); %>
-  </div>
-  <% } %>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <% if(vendorsList && vendorsList.length){ %>
+          <span class="count-badge"><%= vendorsList.length %> vendors</span>
+        <% } %>
+        <a href="/vendors/create" class="btn btn-primary">+ Add Vendor</a>
+      </div>
+    </div>
+
+    <% if(vendorsList && vendorsList.length){ %>
+      <div class="cards-grid" id="vendors-container">
+        <% vendorsList.forEach(vendor => { %>
+          <div class="card">
+            <div class="card-name"><%= vendor.name %></div>
+            <div class="card-meta">
+              <span class="tag"><%= vendor.location || 'No location' %></span>
+            </div>
+            <div class="card-actions">
+              <a href="/vendors/<%= vendor.id %>/update" class="btn btn-ghost btn-sm">Edit</a>
+              <a href="/vendors/<%= vendor.id %>/add-product" class="btn btn-ghost btn-sm">+ Product</a>
+              <a href="/vendors/<%= vendor.id %>/adjust-stock" class="btn btn-ghost btn-sm">Stock</a>
+              <button class="btn btn-danger btn-sm del-vendor-btn" data-id="<%= vendor.id %>">Delete</button>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    <% } else { %>
+      <div class="empty">No vendors yet — add one to get started</div>
+    <% } %>
+  </main>
   <%- include('../partials/nav') %>
   <script src="/js/vendors.js"></script>
 </body>

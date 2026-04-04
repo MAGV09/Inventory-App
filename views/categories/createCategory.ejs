@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <%- include('../partials/head') %>
-  <body>
-    <form id="create-category-form" method="post" action="/categories/create">
-      <input type="text" name="name">
-      <button type="submit">Add</button>
-    </form>
-    <%- include('../partials/nav') %>
-  </body>
+<%- include('../partials/head') %>
+<body>
+  <main>
+    <a href="/categories" class="back-link">Categories</a>
+    <div style="margin-bottom:32px;">
+      <span class="page-label">New Category</span>
+      <h1>Add Category</h1>
+    </div>
+    <div class="form-card">
+      <form method="post" action="/categories/create">
+        <div class="form-group">
+          <label class="form-label">Category Name</label>
+          <input type="text" name="name" placeholder="e.g. GPU" required>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Add Category</button>
+      </form>
+    </div>
+  </main>
+  <%- include('../partials/nav') %>
+</body>
 </html>
