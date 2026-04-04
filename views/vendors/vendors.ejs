@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <%- include('../partials/head') %>
-</head>
 <body>
-  <% if(vendorsList && vendorsList.length!==0){ %>
+  <% if(vendorsList && vendorsList.length !== 0){ %>
   <h1>All Vendors</h1>
   <a href="/vendors/create">Add Vendor</a>
   <p><%= vendorsList.length %></p>
@@ -14,6 +13,8 @@
         <p><%= vendor.location %></p>
         <div>
           <a href="/vendors/<%= vendor.id %>/update">Update</a>
+          <a href="/vendors/<%= vendor.id %>/add-product">Add Product</a>
+          <a href="/vendors/<%= vendor.id %>/adjust-stock">Adjust Stock</a>
           <button class="del-vendor-btn" data-id="<%= vendor.id %>">Delete</button>
         </div>
       </div>

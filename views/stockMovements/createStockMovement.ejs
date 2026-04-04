@@ -18,11 +18,13 @@
         <% }); %>
       </select>
 
-      <select name="type" required>
-        <option value="">Select Type</option>
-        <option value="restock">Restock</option>
-        <option value="sale">Sale</option>
-      </select>
+<select name="type" required>
+  <option value="">Select Type</option>
+  <option value="restock">Restock</option>
+  <option value="removal">Removal</option>
+  <option value="adjustment">Adjustment</option>
+  <option value="damage">Damage</option>
+</select>
 
       <input type="number" name="quantity" min="1" required placeholder="Quantity">
       <input type="text" name="note" placeholder="Note (optional)">

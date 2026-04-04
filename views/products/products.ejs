@@ -7,6 +7,7 @@
       <form action="/products" method="get">
         <input type="search" name="search" id="search" placeholder="Search for a product" value="<%= searchParam || '' %>">
       </form>
+      <a href="/products/create">Add Product</a>
       <% if(productsList && productsList.length!==0 ){ %>
         <h1>All products</h1>
         <p><%= productsList.length %></p>

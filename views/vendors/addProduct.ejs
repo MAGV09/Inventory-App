@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+<body>
+  <h1>Add Product to <%= vendor.name %></h1>
+  <% if(products && products.length !== 0){ %>
+  <form method="post" action="/vendors/<%= vendor.id %>/add-product">
+    <select name="product_id">
+      <% products.forEach(product => { %>
+        <option value="<%= product.id %>"><%= product.name %></option>
+      <% }); %>
+    </select>
+    <input type="number" name="unit_cost" placeholder="Unit Cost" step="0.01" min="0">
+    <button type="submit">Add Product</button>
+  </form>
+  <% } else { %>
+    <p>All products are already linked to this vendor.</p>
+  <% } %>
+  <a href="/vendors">Back to Vendors</a>
+  <%- include('../partials/nav') %>
+</body>
+</html>

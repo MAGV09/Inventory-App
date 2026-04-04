@@ -20,7 +20,6 @@ async function getVendorsUpdateForm(req, res) {
 }
 
 async function updateVendor(req, res) {
-  console.log(req.body);
   await vendors.updateVendor(req.params.id, req.body);
   res.json({ redirect: '/vendors' });
 }
@@ -30,6 +29,28 @@ async function deleteVendor(req, res) {
   res.json({ redirect: '/vendors' });
 }
 
+async function getAddProductForm(req, res) {
+  const vendor = await vendors.getVendor(req.params.id);
+  const products = await vendors.getProductsNotInVendor(req.params.id);
+  res.render('vendors/addProduct', { title: 'Add Product to Vendor', vendor, products });
+}
+
+async function addProductToVendor(req, res) {
+  await vendors.addProductToVendor(req.params.id, req.body);
+  res.redirect(`/vendors`);
+}
+
+async function getAdjustStockForm(req, res) {
+  const vendor = await vendors.getVendor(req.params.id);
+  const products = await vendors.getVendorProducts(req.params.id);
+  res.render('vendors/adjustStock', { title: 'Adjust Stock', vendor, products });
+}
+
+async function adjustStock(req, res) {
+  await vendors.adjustStock(req.params.id, req.body);
+  res.redirect(`/vendors`);
+}
+
 module.exports = {
   getVendorsPage,
   getVendorsForm,
@@ -37,4 +58,8 @@ module.exports = {
   getVendorsUpdateForm,
   updateVendor,
   deleteVendor,
+  getAddProductForm,
+  addProductToVendor,
+  getAdjustStockForm,
+  adjustStock,
 };

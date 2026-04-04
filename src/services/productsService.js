@@ -47,32 +47,32 @@ async function getProduct(searchParam) {
   return rows;
 }
 
-async function getProductDetails(id) {
+async function getProductById(id) {
   const { rows } = await pool.query(
-    `
-    SELECT 
+    `SELECT 
+        products.id,
         products.name,
         categories.name  AS category,
         brands.name      AS brand,
         products.stock_qty,
         MIN(vendor_products.unit_cost) AS starting_price
-    FROM products
-    JOIN categories     ON products.category_id = categories.id
-    JOIN brands         ON products.brand_id = brands.id
-    JOIN vendor_products ON products.id = vendor_products.product_id
-    WHERE products.id=$1
-    GROUP BY products.name, categories.name, brands.name, products.stock_qty
-`,
+     FROM products
+     JOIN categories      ON products.category_id = categories.id
+     JOIN brands          ON products.brand_id = brands.id
+     JOIN vendor_products ON products.id = vendor_products.product_id
+     WHERE products.id = $1
+     GROUP BY products.id, products.name, categories.name, brands.name, products.stock_qty`,
     [id],
   );
 
   if (rows.length === 0) {
-    throw createError(404, 'Failed to get Product details');
+    throw createError(404, 'Product not found');
   }
+
   return rows[0];
 }
 
-async function updateProduct(id, { name, category_id, brand_id, vendor_id, unit_cost }) {
+async function updateProduct(id, { name, category_id, brand_id }) {
   const result = await pool.query(
     `UPDATE products
          SET name        = $1,
@@ -84,16 +84,7 @@ async function updateProduct(id, { name, category_id, brand_id, vendor_id, unit_
   );
 
   if (result.rows.length === 0) {
-    throw createError(404, 'Update Failed');
-  }
-  // update the vendor cost if provided
-  if (vendor_id && unit_cost) {
-    await pool.query(
-      `UPDATE vendor_products
-             SET unit_cost = $1
-             WHERE product_id = $2 AND vendor_id = $3`,
-      [unit_cost, id, vendor_id],
-    );
+    throw createError(404, 'Product not found');
   }
 
   return result.rows[0];
@@ -117,7 +108,7 @@ async function deleteProduct(id) {
   return result.rows[0];
 }
 
-async function addProduct({ name, category_id, brand_id }) {
+async function addProduct({ name, category_id, brand_id, vendor_id, unit_cost }) {
   const result = await pool.query(
     `INSERT INTO products (name, category_id, brand_id, stock_qty)
          VALUES ($1, $2, $3, 0)
@@ -127,13 +118,19 @@ async function addProduct({ name, category_id, brand_id }) {
 
   const product = result.rows[0];
 
+  await pool.query(
+    `INSERT INTO vendor_products (product_id, vendor_id, unit_cost)
+         VALUES ($1, $2, $3)`,
+    [product.id, vendor_id, unit_cost],
+  );
+
   return product;
 }
 
 module.exports = {
   getAllProducts,
   getProduct,
-  getProductDetails,
+  getProductById,
   addProduct,
   updateProduct,
   deleteProduct,

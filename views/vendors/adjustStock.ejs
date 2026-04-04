@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+<body>
+  <h1>Adjust Stock for <%= vendor.name %></h1>
+  <% if(products && products.length !== 0){ %>
+  <form method="post" action="/vendors/<%= vendor.id %>/adjust-stock">
+    <select name="product_id">
+      <% products.forEach(product => { %>
+        <option value="<%= product.id %>"><%= product.name %> (cost: $<%= product.unit_cost %>)</option>
+      <% }); %>
+    </select>
+    <select name="type">
+      <option value="restock">Restock</option>
+      <option value="removal">Removal</option>
+      <option value="adjustment">Adjustment</option>
+      <option value="damage">Damage</option>
+    </select>
+    <input type="number" name="quantity" placeholder="Quantity" min="1">
+    <input type="text" name="note" placeholder="Note (optional)">
+    <button type="submit">Submit</button>
+  </form>
+  <% } else { %>
+    <p>This vendor has no products yet. Add products first.</p>
+  <% } %>
+  <a href="/vendors">Back to Vendors</a>
+  <%- include('../partials/nav') %>
+</body>
+</html>

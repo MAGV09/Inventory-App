@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+<body>
+  <h1><%= product.name %></h1>
+  <p>Category: <%= product.category %></p>
+  <p>Brand: <%= product.brand %></p>
+  <p>Stock: <%= product.stock_qty %></p>
+  <p>Starting Price: $<%= product.starting_price %></p>
+
+  <h2>Vendors</h2>
+  <% if(productVendors && productVendors.length !== 0){ %>
+    <% productVendors.forEach(vendor => { %>
+      <div>
+        <p><%= vendor.name %></p>
+        <p><%= vendor.location %></p>
+        <p>$<%= vendor.unit_cost %></p>
+      </div>
+    <% }); %>
+  <% } else { %>
+    <p>No vendors linked to this product.</p>
+  <% } %>
+
+  <div>
+    <a href="/products/update/<%= product.id %>">Update</a>
+    <a href="/products">Back to Products</a>
+  </div>
+  <%- include('../partials/nav') %>
+</body>
+</html>

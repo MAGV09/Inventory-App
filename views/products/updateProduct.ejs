@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+<body>
+  <h1>Update Product</h1>
+  <form id="update-product-form" data-id="<%= product.id %>">
+
+    <input type="text" name="name" value="<%= product.name %>" required>
+
+    <select name="category_id" required>
+      <% categoriesList.forEach(cat => { %>
+        <option value="<%= cat.id %>" <%= product.category === cat.name ? 'selected' : '' %>>
+          <%= cat.name %>
+        </option>
+      <% }); %>
+    </select>
+
+    <select name="brand_id" required>
+      <% brandsList.forEach(brand => { %>
+        <option value="<%= brand.id %>" <%= product.brand === brand.name ? 'selected' : '' %>>
+          <%= brand.name %>
+        </option>
+      <% }); %>
+    </select>
+
+    <button type="submit">Update</button>
+  </form>
+  <a href="/products">Back to Products</a>
+  <%- include('../partials/nav') %>
+  <script src="/js/products.js"></script>
+</body>
+</html>
