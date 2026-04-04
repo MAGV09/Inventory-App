@@ -10,8 +10,8 @@ const indexRouter = require('./routes/indexRouter');
 const productsRouter = require('./routes/productsRouter');
 const categoriesRouter = require('./routes/categoriesRouter');
 const brandsRouter = require('./routes/brandsRouter');
-// const vendorsRouter = require('./routes/vendorsRouter');
-// const stock_movementsRouter = require('./routes/stock_movementsRouter');
+const vendorsRouter = require('./routes/vendorsRouter');
+const stockMovementsRouter = require('./routes/stockMovementsRouter');
 
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
@@ -26,8 +26,8 @@ app.use('/', indexRouter);
 app.use('/products', productsRouter);
 app.use('/categories', categoriesRouter);
 app.use('/brands', brandsRouter);
-// app.use('/vendors', vendorsRouter);
-// app.use('/stock', stock_movementsRouter);
+app.use('/vendors', vendorsRouter);
+app.use('/stock-movements', stockMovementsRouter);
 
 //err handling
 app.use(errorHandler);

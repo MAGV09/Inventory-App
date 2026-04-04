@@ -21,26 +21,27 @@ async function getAllProducts() {
 }
 async function getProduct(searchParam) {
   const { rows } = await pool.query(
-    `
-    SELECT 
-        products.id   
+    `SELECT 
+        products.id,
         products.name,
         categories.name  AS category,
         brands.name      AS brand,
         products.stock_qty,
         MIN(vendor_products.unit_cost) AS starting_price
-    FROM products
-    JOIN categories     ON products.category_id = categories.id
-    JOIN brands         ON products.brand_id = brands.id
-    JOIN vendor_products ON products.id = vendor_products.product_id
-    WHERE products.name=$1  OR brands.name=$1 OR categories.name=$1
-    GROUP BY products.name, categories.name, brands.name, products.stock_qty,products.id
-`,
-    [searchParam],
+     FROM products
+     JOIN categories      ON products.category_id = categories.id
+     JOIN brands          ON products.brand_id = brands.id
+     JOIN vendor_products ON products.id = vendor_products.product_id
+     WHERE products.id::text = $1
+        OR products.name   ILIKE $2
+        OR brands.name     ILIKE $2
+        OR categories.name ILIKE $2
+     GROUP BY products.id, products.name, categories.name, brands.name, products.stock_qty`,
+    [searchParam, `%${searchParam}%`],
   );
 
   if (rows.length === 0) {
-    throw createError(404, 'Product not found');
+    return null;
   }
 
   return rows;

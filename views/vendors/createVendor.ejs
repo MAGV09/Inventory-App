@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+  <body>
+    <form id="create-vendor-form" method="post" action="/vendors/create">
+      <input type="text" name="name">
+      <input type="text" name="location">
+      <button type="submit">Add</button>
+    </form>
+    <%- include('../partials/nav') %>
+  </body>
+</html>

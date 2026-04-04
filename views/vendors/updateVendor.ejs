@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+  <body>
+    <form id="update-vendor-form" data-id="<%= vendor.id %>">
+      <input type="text" name="name" value="<%= vendor.name || '' %>">
+      <input type="text" name="location" value="<%= vendor.location || '' %>">
+      <button type="submit">Update</button>
+    </form>
+    <%- include('../partials/nav') %>
+    <script src="/js/vendors.js"></script>
+  </body>
+</html>

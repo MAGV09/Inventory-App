@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+  <body>
+    <h1><%= vendor.name %></h1>
+
+    <!-- Step 1: search for product -->
+    <form method="GET" action="/vendors/<%= vendor.id %>/manage">
+      <input type="text" name="product_id" placeholder="Enter product ID or name">
+      <button type="submit">Search</button>
+    </form>
+
+    <% if (product) { %>
+      <!-- Step 2: product found, show appropriate form -->
+      <h2><%= product.name %></h2>
+      <p>Category: <%= product.category %></p>
+      <p>Brand: <%= product.brand %></p>
+
+      <form method="POST" action="/vendors/<%= vendor.id %>/manage">
+        <input type="hidden" name="product_id" value="<%= product.id %>">
+
+        <% if (!inStore) { %>
+          <!-- Add to store: needs unit_cost -->
+          <input type="number" name="unit_cost" placeholder="Your price" step="0.01" required>
+        <% } %>
+
+        <select name="type" required>
+          <option value="restock">Restock</option>
+          <option value="sale">Sale</option>
+        </select>
+        <input type="number" name="quantity" min="1" placeholder="Quantity" required>
+        <input type="text" name="note" placeholder="Note (optional)">
+
+        <button type="submit">
+          <%= inStore ? 'Adjust Stock' : 'Add to Store' %>
+        </button>
+      </form>
+    <% } %>
+
+    <%- include('../partials/nav') %>
+  </body>
+</html>

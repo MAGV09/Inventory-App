@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+</head>
+<body>
+  <% if(vendorsList && vendorsList.length!==0){ %>
+  <h1>All Vendors</h1>
+  <a href="/vendors/create">Add Vendor</a>
+  <p><%= vendorsList.length %></p>
+  <div id="vendors-container">
+    <% vendorsList.forEach(vendor => { %>
+      <div>
+        <p><%= vendor.name %></p>
+        <p><%= vendor.location %></p>
+        <div>
+          <a href="/vendors/<%= vendor.id %>/update">Update</a>
+          <button class="del-vendor-btn" data-id="<%= vendor.id %>">Delete</button>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+  <% } %>
+  <%- include('../partials/nav') %>
+  <script src="/js/vendors.js"></script>
+</body>
+</html>

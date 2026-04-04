@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head') %>
+</head>
+<body>
+  <h1>Stock Movements</h1>
+  <a href="/stock-movements/create">Add Stock Movement</a>
+  <% if(stockMovementsList && stockMovementsList.length !== 0){ %>
+  <div id="stock-movements-container">
+    <% stockMovementsList.forEach(movement => { %>
+      <div>
+        <p><%= movement.product %></p>
+        <p><%= movement.type %></p>
+        <p><%= movement.quantity %></p>
+        <p><%= movement.vendor || 'N/A' %></p>
+        <p><%= movement.note || '' %></p>
+        <p><%= new Date(movement.created_at).toLocaleDateString() %></p>
+      </div>
+    <% }); %>
+  </div>
+  <% } %>
+  <%- include('../partials/nav') %>
+</body>
+</html>
