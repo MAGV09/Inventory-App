@@ -48,6 +48,10 @@ async function deleteCategory(id) {
     throw createError(404, 'Category not found');
   }
 
+  if (category.name.toLowerCase() === 'uncategorized') {
+    throw createError(400, 'Cannot delete Uncategorized');
+  }
+
   let uncategorized = await pool.query(`SELECT id FROM categories WHERE name = 'Uncategorized'`);
 
   if (uncategorized.rows.length === 0) {

@@ -11,10 +11,12 @@
     <% categoriesList.forEach(category => { %>
       <div>
         <p><%= category.name %></p>
+        <% if(category.name.toLowerCase() !=='uncategorized') {%>
         <div>
           <a href="/categories/<%= category.id %>/update">Update</a>
           <button class="del-category-btn" data-id="<%= category.id %>">Delete</button>
         </div>
+        <% } %>
       </div>
     <% }); %>
   </div>

@@ -49,6 +49,10 @@ async function deleteBrand(id) {
     throw createError(404, 'Brand not found');
   }
 
+  if (brand.name.toLowerCase() === 'generic') {
+    throw createError(400, 'Cannot delete generic');
+  }
+
   let generic = await pool.query(`SELECT id FROM brands WHERE name = 'Generic'`);
 
   if (generic.rows.length === 0) {

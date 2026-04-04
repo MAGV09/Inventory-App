@@ -11,10 +11,12 @@
     <% brandsList.forEach(brand => { %>
       <div>
       <p><%= brand.name %></p>
+      <% if(brand.name.toLowerCase() !== 'generic'){ %>
         <div>
         <a href="/brands/<%= brand.id %>/update">Update</a>
         <button class="del-brand-btn" data-id="<%= brand.id %>">Delete</button>
         </div>
+        <% } %>
       </div>
     <% }); %>
   </div>
