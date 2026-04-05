@@ -1,16 +1,12 @@
-const pool = require('../config/database');
-const StockMovment = require('../models/StockMovement');
+const StockMovement = require('../models/StockMovement');
+const Product = require('../models/Product');
 
 async function addStock_movement({ product_id, vendor_id, type, quantity, note }) {
-  const stockMovement = await StockMovment.create({ product_id, vendor_id, type, quantity, note });
+  const stockMovement = await StockMovement.create({ product_id, vendor_id, type, quantity, note });
 
   //update product stock quantity based on stock movement
-  await pool.query(
-    `UPDATE products
-         SET stock_qty = stock_qty + $1
-         WHERE id = $2`,
-    [type === 'restock' ? quantity : -quantity, product_id],
-  );
+  const amount = type === 'restock' ? quantity : -quantity;
+  await Product.adjustStock(product_id, amount);
 
   return stockMovement;
 }

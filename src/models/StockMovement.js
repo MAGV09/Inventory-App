@@ -53,8 +53,18 @@ async function create({ product_id, vendor_id, type, quantity, note }) {
   return rows[0];
 }
 
+async function nullifyVendor(vendor_id) {
+  await pool.query(`UPDATE stock_movements SET vendor_id = NULL WHERE vendor_id = $1`, [vendor_id]);
+}
+
+async function deleteByProduct(product_id) {
+  await pool.query(`DELETE FROM stock_movements WHERE product_id = $1`, [product_id]);
+}
+
 module.exports = {
   findAll,
   find,
   create,
+  nullifyVendor,
+  deleteByProduct,
 };

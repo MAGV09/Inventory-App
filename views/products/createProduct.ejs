@@ -36,7 +36,7 @@
           <label class="form-label">Vendor</label>
           <select name="vendor_id" required>
             <option value="">Select Vendor</option>
-            <% vendorsList.forEach(vendor => { %>
+            <% vendors.forEach(vendor => { %>
               <option value="<%= vendor.id %>"><%= vendor.name %></option>
             <% }); %>
           </select>

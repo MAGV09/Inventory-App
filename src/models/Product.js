@@ -1,5 +1,5 @@
 const pool = require('../config/database');
-const createError = require('http-errors');
+// const createError = require('http-errors');
 async function findAll() {
   const { rows } = await pool.query(`
     SELECT 
@@ -96,22 +96,16 @@ async function update(id, { name, category_id, brand_id }) {
   return rows[0];
 }
 
-async function findAndDelete(id) {
-  const product = await pool.query(`SELECT id FROM products WHERE id = $1`, [id]); //check if the product exists first
-  // if (product.rows.length === 0) {
-  //   throw createError(404, 'Product not found');
-  // }
-  //remove foreign keys constrain
-  // await pool.query(`DELETE FROM vendor_products WHERE product_id = $1`, [id]);
+async function adjustStock(product_id, amount) {
+  await pool.query(`UPDATE products SET stock_qty = stock_qty + $1 WHERE id = $2`, [
+    amount,
+    product_id,
+  ]);
+}
 
-  // await pool.query(`DELETE FROM stock_movements WHERE product_id = $1`, [id]);
-
-  const result = await pool.query(`DELETE FROM products WHERE id = $1 RETURNING *`, [id]);
-
-  // if (result.rows.length === 0) {
-  //   throw createError(404, 'Delete Failed');
-  // }
-  return result.rows[0];
+async function deleteById(id) {
+  const { rows } = await pool.query(`DELETE FROM products WHERE id = $1 RETURNING *`, [id]);
+  return rows[0];
 }
 
 module.exports = {
@@ -120,5 +114,6 @@ module.exports = {
   find,
   create,
   update,
-  findAndDelete,
+  deleteById,
+  adjustStock,
 };

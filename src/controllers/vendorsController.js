@@ -1,8 +1,10 @@
-const vendors = require('../services/vendorsService');
+const VendorService = require('../services/vendorsService');
+const Vendor = require('../models/Vendor');
+const VendorProduct = require('../models/VendorProduct');
 
 async function getVendorsPage(req, res) {
-  const vendorsList = await vendors.getAllVendors();
-  res.render('vendors/vendors', { title: 'Vendors Page', vendorsList });
+  const vendors = await Vendor.findAll();
+  res.render('vendors/vendors', { title: 'Vendors Page', vendors });
 }
 
 async function getVendorsForm(req, res) {
@@ -10,44 +12,51 @@ async function getVendorsForm(req, res) {
 }
 
 async function createVendor(req, res) {
-  await vendors.addVendor(req.body);
+  await Vendor.create(req.body);
   res.redirect('/vendors');
 }
 
 async function getVendorsUpdateForm(req, res) {
-  const vendor = await vendors.getVendor(req.params.id);
+  const id = req.params.id;
+  const vendor = await Vendor.findById(id);
   res.render('vendors/updateVendor', { title: 'Update Vendor', vendor });
 }
 
 async function updateVendor(req, res) {
-  await vendors.updateVendor(req.params.id, req.body);
+  const id = req.params.id;
+  await Vendor.update(id, req.body);
   res.json({ redirect: '/vendors' });
 }
 
 async function deleteVendor(req, res) {
-  await vendors.deleteVendor(req.params.id);
+  const id = req.params.id;
+  await VendorService.deleteVendor(id);
   res.json({ redirect: '/vendors' });
 }
 
 async function getAddProductForm(req, res) {
-  const vendor = await vendors.getVendor(req.params.id);
-  const products = await vendors.getProductsNotInVendor(req.params.id);
+  const id = req.params.id;
+  const vendor = await Vendor.findById(id);
+  const products = await VendorProduct.findExcludingVendor(id);
   res.render('vendors/addProduct', { title: 'Add Product to Vendor', vendor, products });
 }
 
 async function addProductToVendor(req, res) {
-  await vendors.addProductToVendor(req.params.id, req.body);
+  const id = req.params.id;
+  await VendorService.addProductToVendor(id, req.body);
   res.redirect(`/vendors`);
 }
 
 async function getAdjustStockForm(req, res) {
-  const vendor = await vendors.getVendor(req.params.id);
-  const products = await vendors.getVendorProducts(req.params.id);
+  const id = req.params.id;
+  const vendor = await Vendor.findById(id);
+  const products = await VendorProduct.findByVendor(id);
   res.render('vendors/adjustStock', { title: 'Adjust Stock', vendor, products });
 }
 
 async function adjustStock(req, res) {
-  await vendors.adjustStock(req.params.id, req.body);
+  const id = req.params.id;
+  await VendorService.adjustStock(id, req.body);
   res.redirect(`/vendors`);
 }
 

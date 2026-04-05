@@ -9,16 +9,16 @@
         <h1>Vendors</h1>
       </div>
       <div style="display:flex;gap:12px;align-items:center;">
-        <% if(vendorsList && vendorsList.length){ %>
-          <span class="count-badge"><%= vendorsList.length %> vendors</span>
+        <% if(vendors && vendors.length){ %>
+          <span class="count-badge"><%= vendors.length %> vendors</span>
         <% } %>
         <a href="/vendors/create" class="btn btn-primary">+ Add Vendor</a>
       </div>
     </div>
 
-    <% if(vendorsList && vendorsList.length){ %>
+    <% if(vendors && vendors.length){ %>
       <div class="cards-grid" id="vendors-container">
-        <% vendorsList.forEach(vendor => { %>
+        <% vendors.forEach(vendor => { %>
           <div class="card">
             <div class="card-name"><%= vendor.name %></div>
             <div class="card-meta">

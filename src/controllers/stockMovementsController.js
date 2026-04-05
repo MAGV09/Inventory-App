@@ -1,7 +1,7 @@
 const StockMovementService = require('../services/stockMovementsService');
 const StockMovement = require('../models/StockMovement');
 const Product = require('../models/Product');
-const vendors = require('../services/vendorsService');
+const Vendor = require('../models/Vendor');
 
 async function getStockMovementsPage(req, res) {
   const stockMovements = await StockMovement.findAll();
@@ -9,11 +9,11 @@ async function getStockMovementsPage(req, res) {
 }
 
 async function getStockMovementsForm(req, res) {
-  const [products, vendorsList] = await Promise.all([Product.findAll(), vendors.getAllVendors()]);
+  const [products, vendors] = await Promise.all([Product.findAll(), Vendor.findAll()]);
   res.render('stockMovements/createStockMovement', {
     title: 'Create Stock Movement',
     products,
-    vendorsList,
+    vendors,
   });
 }
 

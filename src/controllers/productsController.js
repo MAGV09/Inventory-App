@@ -1,9 +1,11 @@
-const createError = require('http-errors');
 const ProductService = require('../services/productsService');
-const Product = require('../models/Product');
-const categories = require('../services/categoriesService');
+const VendorService = require('../services/vendorsService');
 const brands = require('../services/brandsService');
-const vendors = require('../services/vendorsService');
+const categories = require('../services/categoriesService');
+const Product = require('../models/Product');
+const Vendor = require('../models/Vendor');
+const VendorProduct = require('../models/VendorProduct');
+const createError = require('http-errors');
 
 async function getProductsPage(req, res) {
   const searchText = req.query.search;
@@ -12,16 +14,16 @@ async function getProductsPage(req, res) {
 }
 
 async function getCreateProductForm(req, res) {
-  const [categoriesList, brandsList, vendorsList] = await Promise.all([
+  const [categoriesList, brandsList, vendors] = await Promise.all([
     categories.getAllCategories(),
     brands.getAllBrands(),
-    vendors.getAllVendors(),
+    Vendor.findAll(),
   ]);
   res.render('products/createProduct', {
     title: 'Add Product',
     categoriesList,
     brandsList,
-    vendorsList,
+    vendors,
   });
 }
 
@@ -56,14 +58,16 @@ async function updateProduct(req, res) {
 }
 
 async function deleteProduct(req, res) {
-  await ProductService.deleteProduct(req.params.id);
+  const id = req.params.id;
+  await ProductService.deleteProduct(id);
   res.json({ redirect: '/products' });
 }
 
 async function getProductDetails(req, res) {
+  const id = req.params.id;
   const [product, productVendors] = await Promise.all([
-    Product.findById(req.params.id),
-    vendors.getVendorsByProduct(req.params.id),
+    Product.findById(id),
+    VendorProduct.findByProduct(id),
   ]);
   res.render('products/productDetails', { title: 'Product Details', product, productVendors });
 }
