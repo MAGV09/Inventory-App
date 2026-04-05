@@ -1,4 +1,4 @@
-const pool = require('../db/pool');
+const pool = require('../config/database');
 const createError = require('http-errors');
 async function getAllCategories() {
   const result = await pool.query(

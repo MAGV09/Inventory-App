@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('node:path');
 const morgan = require('morgan');
-const pool = require('./db/pool');
+const pool = require('./config/database');
 require('dotenv').config({ quiet: true });
 
 const errorHandler = require('./middleware/errorHandler');

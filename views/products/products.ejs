@@ -9,8 +9,8 @@
         <h1>Products</h1>
       </div>
       <div style="display:flex;gap:12px;align-items:center;">
-        <% if(productsList && productsList.length){ %>
-          <span class="count-badge"><%= productsList.length %> items</span>
+        <% if(products && products.length){ %>
+          <span class="count-badge"><%= products.length %> items</span>
         <% } %>
         <a href="/products/create" class="btn btn-primary">+ Add Product</a>
       </div>
@@ -18,17 +18,17 @@
 
     <div class="search-bar">
       <form action="/products" method="get" style="display:flex;gap:8px;width:100%;">
-        <input type="search" name="search" placeholder="Search by name, brand or category…" value="<%= searchParam || '' %>">
+        <input type="search" name="search" placeholder="Search by name, brand or category…" value="<%= searchText || '' %>">
         <button type="submit" class="btn btn-ghost">Search</button>
-        <% if(searchParam){ %>
+        <% if(searchText){ %>
           <a href="/products" class="btn btn-ghost">Clear</a>
         <% } %>
       </form>
     </div>
 
-    <% if(productsList && productsList.length){ %>
+    <% if(products && products.length){ %>
       <div class="cards-grid" id="products-container">
-        <% productsList.forEach(product => { %>
+        <% products.forEach(product => { %>
           <div class="card">
             <div class="card-name"><%= product.name %></div>
             <div class="card-meta">
@@ -55,8 +55,8 @@
       </div>
     <% } else { %>
       <div class="empty">
-        <% if(searchParam){ %>
-          No products match "<%= searchParam %>"
+        <% if(searchText){ %>
+          No products match "<%= searchText %>"
         <% } else { %>
           No products yet — add one to get started
         <% } %>

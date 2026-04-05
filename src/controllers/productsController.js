@@ -1,17 +1,14 @@
-const products = require('../services/productsService');
+const createError = require('http-errors');
+const ProductService = require('../services/productsService');
+const Product = require('../models/Product');
 const categories = require('../services/categoriesService');
 const brands = require('../services/brandsService');
 const vendors = require('../services/vendorsService');
 
 async function getProductsPage(req, res) {
-  let productsList;
-  const searchParam = req.query.search;
-  if (searchParam) {
-    productsList = await products.getProduct(searchParam);
-  } else {
-    productsList = await products.getAllProducts();
-  }
-  res.render('products/products', { title: 'Products Page', productsList, searchParam });
+  const searchText = req.query.search;
+  const products = await ProductService.getAllProducts(searchText);
+  res.render('products/products', { title: 'Products Page', products, searchText });
 }
 
 async function getCreateProductForm(req, res) {
@@ -29,13 +26,13 @@ async function getCreateProductForm(req, res) {
 }
 
 async function createProduct(req, res) {
-  await products.addProduct(req.body);
+  await ProductService.addProduct(req.body);
   res.redirect('/products');
 }
 
 async function getUpdateProductForm(req, res) {
   const [product, categoriesList, brandsList] = await Promise.all([
-    products.getProductById(req.params.id),
+    Product.findById(req.params.id),
     categories.getAllCategories(),
     brands.getAllBrands(),
   ]);
@@ -48,17 +45,24 @@ async function getUpdateProductForm(req, res) {
 }
 
 async function updateProduct(req, res) {
-  await products.updateProduct(req.params.id, req.body);
+  const id = req.params.id;
+  const product = await Product.findById(id);
+
+  if (!product) {
+    throw createError(404, 'Product not Found');
+  }
+  await Product.update(id, req.body);
   res.json({ redirect: '/products' });
 }
 
 async function deleteProduct(req, res) {
-  await products.deleteProduct(req.params.id);
+  await ProductService.deleteProduct(req.params.id);
   res.json({ redirect: '/products' });
 }
+
 async function getProductDetails(req, res) {
   const [product, productVendors] = await Promise.all([
-    products.getProductById(req.params.id),
+    Product.findById(req.params.id),
     vendors.getVendorsByProduct(req.params.id),
   ]);
   res.render('products/productDetails', { title: 'Product Details', product, productVendors });

@@ -1,6 +1,5 @@
-const pool = require('../db/pool');
+const pool = require('../config/database');
 const createError = require('http-errors');
-const products = require('./productsService');
 const stock_movements = require('./stockMovementsService');
 
 async function getAllVendors() {
