@@ -14,7 +14,7 @@
           <label class="form-label">Product</label>
           <select name="product_id" required>
             <option value="">Select Product</option>
-            <% productsList.forEach(product => { %>
+            <% products.forEach(product => { %>
               <option value="<%= product.id %>"><%= product.name %></option>
             <% }); %>
           </select>

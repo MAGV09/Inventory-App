@@ -10,7 +10,7 @@
       </div>
       <a href="/stock-movements/create" class="btn btn-primary">+ Add Movement</a>
     </div>
-    <% if(stockMovementsList && stockMovementsList.length){ %>
+    <% if(stockMovements && stockMovements.length){ %>
       <div class="table-wrap">
         <table>
           <thead>
@@ -25,7 +25,7 @@
             </tr>
           </thead>
           <tbody>
-            <% stockMovementsList.forEach(movement => { %>
+            <% stockMovements.forEach(movement => { %>
               <tr>
                 <td class="mono" style="color:var(--muted);">#<%= movement.id %></td>
                 <td><%= movement.product %></td>
