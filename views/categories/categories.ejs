@@ -9,20 +9,20 @@
         <h1>Categories</h1>
       </div>
       <div style="display:flex;gap:12px;align-items:center;">
-        <% if(categoriesList && categoriesList.length){ %>
-          <span class="count-badge"><%= categoriesList.length %> categories</span>
+        <% if(categories && categories.length){ %>
+          <span class="count-badge"><%= categories.length %> categories</span>
         <% } %>
         <a href="/categories/create" class="btn btn-primary">+ Add Category</a>
       </div>
     </div>
-    <% if(categoriesList && categoriesList.length){ %>
+    <% if(categories && categories.length){ %>
       <div class="table-wrap" id="categories-container">
         <table>
           <thead>
             <tr><th>Name</th><th>Actions</th></tr>
           </thead>
           <tbody>
-            <% categoriesList.forEach(category => { %>
+            <% categories.forEach(category => { %>
               <tr>
                 <td><%= category.name %></td>
                 <td>

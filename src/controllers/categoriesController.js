@@ -1,8 +1,9 @@
-const categories = require('../services/categoriesService');
+const CategoryService = require('../services/CategoryService');
+const Category = require('../models/Category');
 
 async function getCategoriesPage(req, res) {
-  const categoriesList = await categories.getAllCategories();
-  res.render('categories/categories', { title: 'Categories Page', categoriesList });
+  const categories = await Category.findAll();
+  res.render('categories/categories', { title: 'Categories Page', categories });
 }
 
 async function getCategoriesForm(req, res) {
@@ -10,22 +11,25 @@ async function getCategoriesForm(req, res) {
 }
 
 async function createCategory(req, res) {
-  await categories.addCategory(req.body);
+  await Category.create(req.body);
   res.redirect('/categories');
 }
 
 async function getCategoriesUpdateForm(req, res) {
-  const category = await categories.getCategory(req.params.id);
+  const id = req.params.id;
+  const category = await Category.findById(id);
   res.render('categories/updateCategory', { title: 'Update Category', category });
 }
 
 async function updateCategory(req, res) {
-  await categories.updateCategory(req.params.id, req.body);
+  const id = req.params.id;
+  await Category.update(id, req.body);
   res.json({ redirect: '/categories' });
 }
 
 async function deleteCategory(req, res) {
-  await categories.deleteCategory(req.params.id);
+  const id = req.params.id;
+  await CategoryService.deleteCategory(id);
   res.json({ redirect: '/categories' });
 }
 

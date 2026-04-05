@@ -1,4 +1,4 @@
-const StockMovementService = require('../services/stockMovementsService');
+const StockMovementService = require('../services/StockMovementService');
 const StockMovement = require('../models/StockMovement');
 const Product = require('../models/Product');
 const Vendor = require('../models/Vendor');

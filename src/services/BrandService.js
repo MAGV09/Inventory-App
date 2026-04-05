@@ -1,5 +1,5 @@
-const pool = require('../config/database');
 const Brand = require('../models/Brand');
+const Product = require('../models/Product');
 const createError = require('http-errors');
 
 async function deleteBrand(id) {
@@ -21,7 +21,7 @@ async function deleteBrand(id) {
 
   const genericId = generic.id;
 
-  await pool.query(`UPDATE products SET brand_id = $1 WHERE brand_id = $2`, [genericId, id]);
+  await Product.updateBrand(id, genericId);
 
   const deletedBrand = await Brand.deleteById(id);
 

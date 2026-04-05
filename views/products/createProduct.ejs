@@ -18,7 +18,7 @@
           <label class="form-label">Category</label>
           <select name="category_id" required>
             <option value="">Select Category</option>
-            <% categoriesList.forEach(cat => { %>
+            <% categories.forEach(cat => { %>
               <option value="<%= cat.id %>"><%= cat.name %></option>
             <% }); %>
           </select>
@@ -27,7 +27,7 @@
           <label class="form-label">Brand</label>
           <select name="brand_id" required>
             <option value="">Select Brand</option>
-            <% brandsList.forEach(brand => { %>
+            <% brands.forEach(brand => { %>
               <option value="<%= brand.id %>"><%= brand.name %></option>
             <% }); %>
           </select>

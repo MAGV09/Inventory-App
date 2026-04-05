@@ -96,6 +96,10 @@ async function update(id, { name, category_id, brand_id }) {
   return rows[0];
 }
 
+async function deleteById(id) {
+  const { rows } = await pool.query(`DELETE FROM products WHERE id = $1 RETURNING *`, [id]);
+  return rows[0];
+}
 async function adjustStock(product_id, amount) {
   await pool.query(`UPDATE products SET stock_qty = stock_qty + $1 WHERE id = $2`, [
     amount,
@@ -103,9 +107,18 @@ async function adjustStock(product_id, amount) {
   ]);
 }
 
-async function deleteById(id) {
-  const { rows } = await pool.query(`DELETE FROM products WHERE id = $1 RETURNING *`, [id]);
-  return rows[0];
+async function updateBrand(oldBrandId, newBrandId) {
+  await pool.query(`UPDATE products SET brand_id = $1 WHERE brand_id = $2`, [
+    newBrandId,
+    oldBrandId,
+  ]);
+}
+
+async function updateCategory(oldCategoryId, newCategoryId) {
+  await pool.query(`UPDATE products SET category_id = $1 WHERE category_id = $2`, [
+    newCategoryId,
+    oldCategoryId,
+  ]);
 }
 
 module.exports = {
@@ -116,4 +129,6 @@ module.exports = {
   update,
   deleteById,
   adjustStock,
+  updateBrand,
+  updateCategory,
 };

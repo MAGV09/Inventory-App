@@ -1,4 +1,4 @@
-const StockMovementService = require('./stockMovementsService');
+const StockMovementService = require('./StockMovementService');
 const Vendor = require('../models/Vendor');
 const VendorProduct = require('../models/VendorProduct');
 const StockMovement = require('../models/StockMovement');
@@ -14,21 +14,24 @@ async function deleteVendor(id) {
   await StockMovement.nullifyVendor(id);
 
   //delete vendor
-  await Vendor.deleteById(id);
+  const deletedVendor = await Vendor.deleteById(id);
+  return deletedVendor;
 }
 
-async function adjustStock(vendor_id, { product_id, unit_cost, type, quantity, note }) {
+async function adjustStock(vendor_id, { product_id, type, quantity, note }) {
   const vendorProduct = await VendorProduct.findByVendorAndProduct(vendor_id, product_id);
   if (!vendorProduct) {
     throw createError(404, 'Vendor does not sell this product');
   }
-  await StockMovementService.addStock_movement({
+  const adjustedStock = await StockMovementService.addStock_movement({
     vendor_id,
     product_id,
     type,
     quantity,
     note,
   });
+
+  return adjustedStock;
 }
 
 async function addProductToVendor(vendor_id, { product_id, unit_cost }) {
@@ -37,7 +40,8 @@ async function addProductToVendor(vendor_id, { product_id, unit_cost }) {
   if (existingProduct) {
     throw createError(400, 'Vendor already sells this product');
   }
-  await VendorProduct.create({ vendor_id, product_id, unit_cost });
+  const product = await VendorProduct.create({ vendor_id, product_id, unit_cost });
+  return product;
 }
 
 module.exports = {

@@ -18,7 +18,8 @@ async function deleteProduct(id) {
   await StockMovement.deleteByProduct(id);
 
   //delete product
-  await Product.deleteById(id);
+  const deletedProduct = await Product.deleteById(id);
+  return deletedProduct;
 }
 
 async function addProduct({ name, category_id, brand_id, vendor_id, unit_cost }) {

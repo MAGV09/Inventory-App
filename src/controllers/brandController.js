@@ -1,4 +1,4 @@
-const BrandService = require('../services/brandsService');
+const BrandService = require('../services/BrandService');
 const Brand = require('../models/Brand');
 const createError = require('http-errors');
 
@@ -24,7 +24,7 @@ async function getBrandsUpdateForm(req, res) {
 
 async function updateBrand(req, res) {
   const id = req.params.id;
-  const brand = Brand.findById(id);
+  const brand = await Brand.findById(id);
   if (!brand) {
     throw createError(404, 'Brand not Found');
   }
