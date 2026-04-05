@@ -9,20 +9,20 @@
         <h1>Brands</h1>
       </div>
       <div style="display:flex;gap:12px;align-items:center;">
-        <% if(brandsList && brandsList.length){ %>
-          <span class="count-badge"><%= brandsList.length %> brands</span>
+        <% if(brands && brands.length){ %>
+          <span class="count-badge"><%= brands.length %> brands</span>
         <% } %>
         <a href="/brands/create" class="btn btn-primary">+ Add Brand</a>
       </div>
     </div>
-    <% if(brandsList && brandsList.length){ %>
+    <% if(brands && brands.length){ %>
       <div class="table-wrap" id="brands-container">
         <table>
           <thead>
             <tr><th>Name</th><th>Actions</th></tr>
           </thead>
           <tbody>
-            <% brandsList.forEach(brand => { %>
+            <% brands.forEach(brand => { %>
               <tr>
                 <td><%= brand.name %></td>
                 <td>

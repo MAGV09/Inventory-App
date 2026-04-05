@@ -1,8 +1,10 @@
-const brands = require('../services/brandsService');
+const BrandService = require('../services/brandsService');
+const Brand = require('../models/Brand');
+const createError = require('http-errors');
 
 async function getBrandsPage(req, res) {
-  const brandsList = await brands.getAllBrands();
-  res.render('brands/brands', { title: 'Brands Page', brandsList });
+  const brands = await Brand.findAll();
+  res.render('brands/brands', { title: 'Brands Page', brands });
 }
 
 async function getBrandsForm(req, res) {
@@ -10,21 +12,28 @@ async function getBrandsForm(req, res) {
 }
 
 async function createBrand(req, res) {
-  await brands.addBrand(req.body);
+  await Brand.create(req.body);
   res.redirect('/brands');
 }
 
 async function getBrandsUpdateForm(req, res) {
-  const brand = await brands.getBrand(req.params.id);
+  const id = req.params.id;
+  const brand = await Brand.findById(id);
   res.render('brands/updateBrand', { title: 'update Brand', brand });
 }
 
 async function updateBrand(req, res) {
-  await brands.updateBrand(req.params.id, req.body);
+  const id = req.params.id;
+  const brand = Brand.findById(id);
+  if (!brand) {
+    throw createError(404, 'Brand not Found');
+  }
+  await Brand.update(id, req.body);
   res.json({ redirect: '/brands' });
 }
 async function deleteBrand(req, res) {
-  await brands.deleteBrand(req.params.id);
+  const id = req.params.id;
+  await BrandService.deleteBrand(id);
   res.json({ redirect: '/brands' });
 }
 module.exports = {
