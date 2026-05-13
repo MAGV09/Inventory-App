@@ -2,7 +2,7 @@
 
 A full-stack inventory management web application built with Node.js, Express, and PostgreSQL. Designed to manage products, categories, brands, vendors, and stock movements through a clean, responsive interface.
 
-🔗 **[Live Demo]([https://your-live-url.onrender.com](https://inventory-app-782m.onrender.com/))** &nbsp;|&nbsp; 👤 **[GitHub](https://github.com/MAGV09)**
+🔗 **[Live Demo]([https://your-live-url.onrender.com](https://inventory-app-782m.onrender.com/))** 
 
 ---
 
@@ -12,15 +12,15 @@ A full-stack inventory management web application built with Node.js, Express, a
 
 | Products | Stock Movements |
 |---|---|
-| ![Products](<img width="1920" height="1080" alt="1" src="https://github.com/user-attachments/assets/6627c879-5fea-4421-9d8d-e8fb7fe0d191" />
-) | ![Products](<img width="1920" height="1080" alt="3" src="https://github.com/user-attachments/assets/104b300e-eebb-4f70-a290-43ee2c1921a7" />
-) |
+| ![Products]<img width="1920" height="1080" alt="1" src="https://github.com/user-attachments/assets/6627c879-5fea-4421-9d8d-e8fb7fe0d191" />
+ | ![Products]<img width="1920" height="1080" alt="3" src="https://github.com/user-attachments/assets/104b300e-eebb-4f70-a290-43ee2c1921a7" />
+ |
 
 | Add Product | Vendors |
 |---|---|
-| ![Add Product](<img width="1920" height="1080" alt="2" src="https://github.com/user-attachments/assets/c28969c7-69d5-41cc-b95d-8f8643ae2456" />
-) | ![Vendors](<img width="1920" height="1080" alt="Screenshot from 2026-05-13 20-46-24" src="https://github.com/user-attachments/assets/7d806d9d-bd94-4348-bf70-548f55a1de4d" />
-) |
+| ![Add Product]<img width="1920" height="1080" alt="2" src="https://github.com/user-attachments/assets/c28969c7-69d5-41cc-b95d-8f8643ae2456" />
+ | ![Vendors]<img width="1920" height="1080" alt="Screenshot from 2026-05-13 20-46-24" src="https://github.com/user-attachments/assets/7d806d9d-bd94-4348-bf70-548f55a1de4d" />
+ |
 
 ---
 
