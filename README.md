@@ -2,7 +2,7 @@
 
 A full-stack inventory management web application built with Node.js, Express, and PostgreSQL. Designed to manage products, categories, brands, vendors, and stock movements through a clean, responsive interface.
 
-🔗 **[Live Demo]([https://your-live-url.onrender.com](https://inventory-app-782m.onrender.com/))** 
+ **[Live Demo](https://inventory-app-782m.onrender.com/)**
 
 ---
 
