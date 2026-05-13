@@ -8,19 +8,13 @@ A full-stack inventory management web application built with Node.js, Express, a
 
 ## Screenshots
 
-> _Add screenshots here — homepage, product list, add product form, etc._
-
 | Products | Stock Movements |
-|---|---|
-| <img width="1920" height="1080" alt="1" src="https://github.com/user-attachments/assets/6627c879-5fea-4421-9d8d-e8fb7fe0d191" />
- | <img width="1920" height="1080" alt="3" src="https://github.com/user-attachments/assets/104b300e-eebb-4f70-a290-43ee2c1921a7" />
- |
+| :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/6627c879-5fea-4421-9d8d-e8fb7fe0d191" width="100%" alt="Products" /> | <img src="https://github.com/user-attachments/assets/104b300e-eebb-4f70-a290-43ee2c1921a7" width="100%" alt="Stock Movements" /> |
 
 | Add Product | Vendors |
-|---|---|
-| <img width="1920" height="1080" alt="2" src="https://github.com/user-attachments/assets/c28969c7-69d5-41cc-b95d-8f8643ae2456" />
- | <img width="1920" height="1080" alt="Screenshot from 2026-05-13 20-46-24" src="https://github.com/user-attachments/assets/7d806d9d-bd94-4348-bf70-548f55a1de4d" />
- |
+| :---: | :---: |
+| <img src="https://github.com/user-attachments/assets/c28969c7-69d5-41cc-b95d-8f8643ae2456" width="100%" alt="Add Product" /> | <img src="https://github.com/user-attachments/assets/7d806d9d-bd94-4348-bf70-548f55a1de4d" width="100%" alt="Vendors" /> |
 
 ---
 
