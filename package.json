@@ -16,7 +16,7 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "populate": "node src/db/populatedb.js",
+    "populate": "node src/scripts/populatedb.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
